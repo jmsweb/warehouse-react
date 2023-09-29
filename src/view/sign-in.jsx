@@ -79,7 +79,7 @@ class SignIn extends React.Component {
                         />
                     </Form.Group>
                     
-                    <div className='d-flex justify-content-between mx-3 mb-4'>
+                    <div className='d-flex justify-content-center mx-3 mb-4'>
                         <Form.Group controlId='form_rm' className='p-2'>
                             <Form.Check type='checkbox' label='Remember me' />
                         </Form.Group>
@@ -95,11 +95,11 @@ class SignIn extends React.Component {
                     <div className='text-center'>
                         <p>Not a member? <NavLink to={'/register'}>Register</NavLink></p>
                         <p>or sign up with:</p>
-                        <div className='d-flex justify-content-between mx-auto' style={{width: '40%'}}>
-                            <NavLink href='#!' className='p-2'><Facebook className='fs-3' /></NavLink>
-                            <NavLink href='#!' className='p-2'><Google className='fs-3' /></NavLink>
-                            <NavLink href='#!' className='p-2'><Twitter className='fs-3' /></NavLink>
-                            <NavLink href='#!' className='p-2'><Github className='fs-3' /></NavLink>
+                        <div className='d-flex justify-content-center mx-auto'>
+                            <NavLink href='#!' className='p-2' style={{width: '3rem'}}><Facebook className='fs-3' /></NavLink>
+                            <NavLink href='#!' className='p-2' style={{width: '3rem'}}><Google className='fs-3' /></NavLink>
+                            <NavLink href='#!' className='p-2' style={{width: '3rem'}}><Twitter className='fs-3' /></NavLink>
+                            <NavLink href='#!' className='p-2' style={{width: '3rem'}}><Github className='fs-3' /></NavLink>
                         </div>
                     </div>
                 </Form>

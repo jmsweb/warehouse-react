@@ -8,7 +8,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 import { ListGroup } from 'react-bootstrap/esm';
 
 class Footer extends React.Component {
@@ -38,7 +37,7 @@ class Footer extends React.Component {
                                         <Nav.Link as={NavLink} to='/register'>Registration</Nav.Link>
                                         <Nav.Link as={NavLink} to='/term-of-use' className={'text-nowrap'}>Term of Use</Nav.Link>
                                         <Nav.Link as={NavLink} to='/privacy-policy' className={'text-nowrap'}>Privacy Policy</Nav.Link>
-                                        <Button onClick={ async () => {
+                                        <Nav.Link as={NavLink} onClick={ async () => {
                                             await fetch(`${process.env.WAREHOUSE_API}/health-check`, {
                                                 method: 'GET',
                                                 credentials: 'include',
@@ -62,7 +61,7 @@ class Footer extends React.Component {
 
                                         }} className='col-md-2'>
                                                 Verify
-                                        </Button>
+                                        </Nav.Link>
                                     </ListGroup>
                                 </Nav>
                             </Navbar.Brand>
