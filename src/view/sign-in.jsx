@@ -11,6 +11,7 @@ import { Google } from 'react-bootstrap-icons';
 import { Github } from 'react-bootstrap-icons';
  
 class SignIn extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -28,31 +29,25 @@ class SignIn extends React.Component {
 
     onSubmit = async (event) => {
         event.preventDefault();
-        await fetch(
-            'http://localhost:81/api/v1/auth/token',
-            {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Authorization': 'Basic ' + btoa(this.state.form_un + ':' + this.state.form_pw),
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
+        await fetch(process.env.WAREHOUSE_API + '/api/v1/auth', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Authorization': 'Basic ' + btoa(this.state.form_un + ':' + this.state.form_pw),
+                'Accept': 'application/json'
             }
-        )
+        })
         .then(response => response.json())
         .then(response => {
-            if (response.message !== 'OK') {
-                throw new Error(response.message);
+            if (!response.success) {
+                throw new Error("failed api call");
             }
-
+            console.log('HttpOnly SameSite HTTP, Secure on HTTPS');
             // JWT is HttpOnly Cookie (Managed by Browser!) Prevent XSS
-            // Store JWT in localStorage, or Redis, Prevent CSRF to validate against HttpOnly cookie
-            localStorage.setItem('mike-warehouse', JSON.stringify({ isAuthenticated: true }));
-            localStorage.setItem('mike-warehouse-jwt', response.jwt);
             window.location = '/';
         })
-        .catch(() => {
+        .catch((error) => {
+            console.log(error);
             this.setState({
                 error: true
             });
@@ -65,7 +60,15 @@ class SignIn extends React.Component {
                 {this.state.error && <Alert variant='danger' key={1}>Please submit correct credentials.</Alert>}
                 <Form onSubmit={this.onSubmit} className='d-flex flex-column w-50 mx-auto mt-4 mb-4' style={{minWidth: '21rem'}}>
                     <Form.Group controlId='form_un' className='mb-4'>
-                        <Form.Control type='email' placeholder='Email' />
+                        <Form.Control type='email'
+                            placeholder='Email'
+                            value={this.state.form_un}
+                            onChange={(e) => (
+                                this.setState({
+                                    form_un: e.target.value
+                                })
+                            )}
+                        />
                     </Form.Group>
                     <Form.Group controlId='form_pw' className='mb-4'>
                         <Form.Control type='password'

@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-
 module.exports = (env) => {
   return {
     entry: {
@@ -104,8 +103,7 @@ module.exports = (env) => {
           }
       },
       open: true,
-      historyApiFallback: true,
-      allowedHosts: "attlocal.net"
+      historyApiFallback: true
     },
     module: {
       rules: [

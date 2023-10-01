@@ -38,7 +38,7 @@ class Footer extends React.Component {
                                         <Nav.Link as={NavLink} to='/term-of-use' className={'text-nowrap'}>Term of Use</Nav.Link>
                                         <Nav.Link as={NavLink} to='/privacy-policy' className={'text-nowrap'}>Privacy Policy</Nav.Link>
                                         <Nav.Link as={NavLink} onClick={ async () => {
-                                            await fetch(`${process.env.WAREHOUSE_API}/health-check`, {
+                                            await fetch(process.env.WAREHOUSE_API + '/api/v1/auth/verify', {
                                                 method: 'GET',
                                                 credentials: 'include',
                                                 headers: {
@@ -47,16 +47,10 @@ class Footer extends React.Component {
                                             })
                                             .then(response => response.json())
                                             .then(response => {
-                                                this.setState({response: response.warehouse_api}, () => {
-                                                    alert(this.state.response);
-                                                    console.log(this.state.response);
-                                                });
+                                                console.log(response);
                                             })
                                             .catch((error) => {
-                                                this.setState({response: error}, () => {
-                                                    alert(this.state.response);
-                                                    console.log(this.state.response);
-                                                });
+                                                console.log(error);
                                             });
 
                                         }} className='col-md-2'>
