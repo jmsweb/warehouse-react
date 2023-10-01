@@ -7,58 +7,17 @@ module.exports = (env) => {
   return {
     entry: {
       app: {
-        import: './src/App.jsx',
+        import: './src/main.js',
         dependOn: 'shared'
       },
-      home: {
-        import: './src/view/home.jsx',
-        dependOn: 'shared'
-      },
-      about: {
-        import: './src/view/about.jsx',
-        dependOn: 'shared'
-      },
-      contact: {
-        import: './src/view/contact.jsx',
-        dependOn: 'shared'
-      },
-      register: {
-        import: './src/view/register.jsx',
-        dependOn: 'shared'
-      },
-      termOfUse: {
-        import: './src/view/term-of-use.jsx',
-        dependOn: 'shared'
-      },
-      privacyPolicy: {
-        import: './src/view/privacy-policy.jsx',
-        dependOn: 'shared'
-      },
-      signIn: {
-        import: './src/view/sign-in.jsx',
-        dependOn: 'shared'
-      },
-      deal: {
-        import: './src/view/deal.jsx',
-        dependOn: 'shared'
-      },
-      cartReview: {
-        import: './src/view/cart-review.jsx',
-        dependOn: 'shared'
-      },
-      forgotPassword: {
-        import: './src/view/forgot-password.jsx',
-        dependOn: 'shared'
-      },
-      menu: {
-        import: './src/component/menu/index.jsx',
-        dependOn: 'shared'
-      },
-      footer: {
-        import: './src/component/footer/index.jsx',
-        dependOn: 'shared'
-      },
-      shared: ['react', 'react-dom', 'react-router-dom', 'react-bootstrap', 'react-bootstrap-icons', 'bootstrap']
+      shared: [
+        'react',
+        'react-dom',
+        'react-router-dom',
+        'react-bootstrap',
+        'react-bootstrap-icons',
+        'bootstrap'
+      ]
     },
     optimization: {
       splitChunks: {
@@ -69,6 +28,7 @@ module.exports = (env) => {
     },
     output: {
       path: env.output_path, // the bundle output path
+      publicPath: '/',
       filename: '[name].[chunkhash].js', // the name of the bundle
       clean: true,
     },
@@ -96,11 +56,12 @@ module.exports = (env) => {
       host: 'dorado-pc.attlocal.net',
       port: 3001,
       server: {
-          type: 'https',
-          options: {
-              cert: 'C:/dev/httpd-2.4.57/Apache24/certs/apache.crt',
-              key: 'C:/dev/httpd-2.4.57/Apache24/certs/apache.key'
-          }
+          // DISABLED HTTPS FOR INTEGRATION AND DEVELOPMENT
+          // type: 'https',
+          // options: {
+          //     cert: 'C:/dev/httpd-2.4.57/Apache24/certs/apache.crt',
+          //     key: 'C:/dev/httpd-2.4.57/Apache24/certs/apache.key'
+          // }
       },
       open: true,
       historyApiFallback: true

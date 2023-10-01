@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import { Link, NavLink } from 'react-router-dom';
 
 class Deal extends React.Component {
 
@@ -20,6 +21,11 @@ class Deal extends React.Component {
                                 <h5 className='text-center p-2'>Just Arrived</h5>
                                 <p style={{minWidth: '13rem', height: '11rem'}}>These items are the latest additions to our collection, handpicked to
                                 bring you the newest and most exciting options available.</p>
+                                <Link
+                                    className="primary mt-auto text-nowrap w-100"
+                                    role="button"
+                                    to={{pathname: "/catalog/explore-new-products", query: 'test'}}
+                                >Explore New Products</Link>
                                 <Button variant="primary mt-auto text-nowrap w-100">Explore New Products</Button>
                             </div>
                         </div>

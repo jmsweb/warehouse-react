@@ -33,7 +33,7 @@ class Menu extends React.Component {
             <Navbar bg='light' style={{height: '10vh'}} data-bs-theme='light'>
                 <Container>
                     <Navbar.Brand as={NavLink} to='/'>
-                        <img src='/logo.svg' alt='React Warehouse &copy;' width='30' height='30'/>
+                        <img src='/logo.svg' alt='Warehouse React &copy;' width='30' height='30'/>
                         Warehouse React
                     </Navbar.Brand>
                     <Nav>
