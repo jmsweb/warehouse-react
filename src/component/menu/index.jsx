@@ -15,7 +15,7 @@ class Menu extends React.Component {
         };
     }
 
-    async componentDidMount() {
+    componentDidMount = async () => {
         await fetch(process.env.WAREHOUSE_API + '/api/v1/auth/verify', {
             method: 'GET',
             credentials: 'include',
@@ -23,13 +23,9 @@ class Menu extends React.Component {
                 'Accept': 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            this.setState({verified: data.success});
-        })
-        .catch((error) => {
-            this.setState({verified: false});
-        });
+        .then( response => response.json() )
+        .then( data => this.setState({verified: data.success}) )
+        .catch( () => this.setState({verified: false}) );
     }
 
     render() {
