@@ -13,31 +13,30 @@ class Menu extends React.Component {
         this.state = {
             verified: false
         };
+
     }
 
-    async componentDidMount() {
-        await fetch(process.env.WAREHOUSE_API + '/api/v1/auth/verify', {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            this.setState({verified: data.success});
-        })
-        .catch((error) => {
-            this.setState({verified: false});
-        });
-    }
+    componentDidMount() {
+        (async () => (
+            await fetch(process.env.WAREHOUSE_API + '/api/v1/auth/verify', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then( response => response.json() )
+            .then( data => this.setState({verified: data.success}) )
+            .catch( () => this.setState({verified: false}) )
+        ))();
+    };
 
     render() {
         return (
             <Navbar bg='light' style={{height: '10vh'}} data-bs-theme='light'>
                 <Container>
-                    <Navbar.Brand as={NavLink} to='/'>
-                        <img src='/logo.svg' alt='React Warehouse &copy;' width='30' height='30'/>
+                    <Navbar.Brand href='/'>
+                        <img src='/logo.svg' alt='Warehouse React &copy;' width='30' height='30'/>
                         Warehouse React
                     </Navbar.Brand>
                     <Nav>
@@ -47,10 +46,11 @@ class Menu extends React.Component {
                                     <NavDropdown.Item href="/contact-warehouse">Profile</NavDropdown.Item>
                                     <NavDropdown.Item href="/account">Account</NavDropdown.Item>
                                     <NavDropdown.Item href="/history">History</NavDropdown.Item>
+                                    <NavDropdown.Item href="/catalog/add">Add Product</NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item href="/sign-out">Sign Out</NavDropdown.Item>
                                 </NavDropdown> 
-                                : <Nav.Link as={NavLink} to='/sign-in'>Sign in</Nav.Link>
+                                : <Nav.Link href='/sign-in'>Sign in</Nav.Link>
                         }
                         <Nav.Link as={NavLink} to='/cart-review'>
                             <i><Cart className='fs-3'/></i>
