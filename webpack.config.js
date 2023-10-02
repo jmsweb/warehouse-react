@@ -16,7 +16,8 @@ module.exports = (env) => {
         'react-router-dom',
         'react-bootstrap',
         'react-bootstrap-icons',
-        'bootstrap'
+        'bootstrap',
+        'html5-qrcode'
       ]
     },
     optimization: {
@@ -28,7 +29,7 @@ module.exports = (env) => {
     },
     output: {
       path: env.output_path, // the bundle output path
-      publicPath: '/',
+      publicPath: '/',       // base url for built and copied resources
       filename: '[name].[chunkhash].js', // the name of the bundle
       clean: true,
     },
@@ -53,7 +54,7 @@ module.exports = (env) => {
       })
     ],
     devServer: {
-      host: 'dorado-pc.attlocal.net',
+      host: 'localhost',
       port: 3001,
       server: {
           // DISABLED HTTPS FOR INTEGRATION AND DEVELOPMENT

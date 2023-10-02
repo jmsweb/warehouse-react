@@ -37,23 +37,19 @@ class Footer extends React.Component {
                                         <Nav.Link as={NavLink} to='/register'>Registration</Nav.Link>
                                         <Nav.Link as={NavLink} to='/term-of-use' className={'text-nowrap'}>Term of Use</Nav.Link>
                                         <Nav.Link as={NavLink} to='/privacy-policy' className={'text-nowrap'}>Privacy Policy</Nav.Link>
-                                        <Nav.Link as={NavLink} onClick={ async () => {
-                                            await fetch(process.env.WAREHOUSE_API + '/api/v1/auth/verify', {
-                                                method: 'GET',
-                                                credentials: 'include',
-                                                headers: {
-                                                    'Accept': 'application/json'
-                                                }
-                                            })
-                                            .then(response => response.json())
-                                            .then(response => {
-                                                console.log(response);
-                                            })
-                                            .catch((error) => {
-                                                console.log(error);
-                                            });
-
-                                        }} className='col-md-2'>
+                                        <Nav.Link as={NavLink} onClick={
+                                            async () =>
+                                                await fetch(process.env.WAREHOUSE_API + '/api/v1/auth/verify', {
+                                                    method: 'GET',
+                                                    credentials: 'include',
+                                                    headers: {
+                                                        'Accept': 'application/json'
+                                                    }
+                                                })
+                                                .then(response => response.json())
+                                                .then(response => console.log(response) )
+                                                .catch((error) => console.log(error) )
+                                        } className='col-md-2'>
                                                 Verify
                                         </Nav.Link>
                                     </ListGroup>

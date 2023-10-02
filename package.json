@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:dev": "npx webpack --mode=development --env build=dev --env warehouse_api=https://dorado-pc.attlocal.net:3082 --env output_path=C:\\dev\\www\\staging\\warehouse-react",
-    "start:dev": "npx webpack serve --mode=development --env build=webpack --env warehouse_api=https://dorado-pc.attlocal.net:3082",
+    "start:dev": "npx webpack serve --mode=development --env build=webpack --env warehouse_api=http://localhost:3082",
     "build:prod": "npx webpack --mode=production --env build=prod --env warehouse_api=https://dorado-pc.attlocal.net:8082 --env output_path=C:\\dev\\www\\production\\warehouse-react"
   },
   "keywords": [],
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.2",
+    "html5-qrcode": "^2.3.8",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-bootstrap-icons": "^1.10.3",

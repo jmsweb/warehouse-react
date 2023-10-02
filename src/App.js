@@ -21,6 +21,8 @@ const App = () => {
 
     document.title = `Warehouse - React (${process.env.SITE_BUILD})`;
 
+    // PROTECTED ROUTE USE AuthProvider
+    // https://blog.devgenius.io/how-to-add-authentication-to-a-react-app-26865ecaca4b
     const routes = useRoutes([
         {
             path: '/',
