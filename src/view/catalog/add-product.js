@@ -3,13 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { Form, FormControl, InputGroup } from 'react-bootstrap';
-import { Search } from 'react-bootstrap-icons';
-import { Camera } from 'react-bootstrap-icons';
+import Form from 'react-bootstrap/Form';
+import Camera from 'react-bootstrap-icons/dist/icons/camera';
 import { Html5Qrcode } from 'html5-qrcode';
 
 class AddProduct extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -32,22 +30,52 @@ class AddProduct extends React.Component {
         }
         this.html5Qrcode = null;
         this.onSubmit = this.onSubmit.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
-    componentDidMount() {
-        Html5Qrcode
-            .getCameras()
-            .then(devices => {
-                if (devices && devices.length) {
-                    console.log('found device', devices[0].id);
-                    this.setState(prevState => ({
-                        ...prevState,
-                        cameraId: devices[0].id
-                    }));
-                }
-            })
-            .catch(err => { console.log(err)});
-    }
+    onClick = () => {
+        if (!this.state.useCamera) {
+            Html5Qrcode
+                .getCameras()
+                .then(devices => {
+                    if (devices && devices.length) {
+                        console.log('found device', devices[0].id);
+                        this.setState(prevState => ({
+                            ...prevState,
+                            cameraId: devices[0].id,
+                            useCamera: !prevState.useCamera
+                        }), () => {
+                            this.html5Qrcode = new Html5Qrcode('html5qr-code-full-region');
+                            this.html5Qrcode.start(
+                                this.state.cameraId,
+                                {fps: 30, qrbox: {width: 200, height: 75}, facingMode: 'environment'},
+                                (text, result) => {
+                                    console.log(text, result);
+                                    this.setState(prevState => ({
+                                        form: {
+                                            ...prevState.form,
+                                            sku: text,
+                                        }
+                                    }), () => this.html5Qrcode.stop());
+                                }
+                            ).catch(error => {
+                                console.log('smething went wrong');
+                                console.log(error);
+                            });
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                });
+
+        } else {
+            this.setState(prevState => ({
+                ...prevState,
+                useCamera: !prevState.useCamera
+            }), () => {this.html5Qrcode.stop()});
+        }
+    };
 
     onSubmit = (event) => {
         event.preventDefault();
@@ -74,11 +102,15 @@ class AddProduct extends React.Component {
         })(event, this.state.form);
     }
 
+    componentDidUpdate() {
+        console.log(this);
+    }
+
     render() {
         return (
             <Container className='p-3 d-flex flex-column' style={{ minHeight: '60vh'}}>
                 <Form name='product'>
-                    <div id='html5qr-code-full-region' className='w-50 mx-auto'></div>
+                    <div id='html5qr-code-full-region' className='w-50 mx-auto' width="6rem"></div>
                     <Row className='d-flex justify-content-center'>
                         <Form.Group as={Col} controlId='form_name' className='mb-4'>
                             <Form.Label>Product Name</Form.Label>
@@ -112,35 +144,7 @@ class AddProduct extends React.Component {
                         </Form.Group>
                         <Form.Group as={Col} controlId='form_sku' className='mb-4'>
                             <Form.Label>Product SKU</Form.Label>
-                            <Camera className='m-1 align-top' onClick={ () => {
-                                this.setState(prevState => ({
-                                    ...prevState,
-                                    useCamera: !prevState.useCamera
-                                }), () => {
-                                    if (this.state.useCamera) {
-                                        this.html5Qrcode = new Html5Qrcode('html5qr-code-full-region');
-                                        this.html5Qrcode.start(
-                                            this.state.cameraId,
-                                            {fps: 30, qrbox: {width: 200, height: 75}, facingMode: 'environment'},
-                                            (text, result) => {
-                                                console.log(text, result);
-                                                this.setState(prevState => ({
-                                                    form: {
-                                                        ...prevState.form,
-                                                        sku: text,
-                                                    }
-                                                }), () => this.html5Qrcode.stop());
-                                            }
-                                        ).catch(error => {
-                                            console.log('smething went wrong');
-                                            console.log(error);
-                                        });
-                                    } else {
-                                        this.html5Qrcode.stop();
-                                    }
-                                });
-                                
-                            }} />
+                            <Camera className='m-1 align-top' onClick={this.onClick} />
                             <Form.Control type='text' 
                                 placeholder='Product SKU'
                                 value={this.state.form.sku}
