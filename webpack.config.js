@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = (env) => {
   return {
@@ -51,7 +52,8 @@ module.exports = (env) => {
       new webpack.EnvironmentPlugin({
         SITE_BUILD: env.build,
         WAREHOUSE_API: env.warehouse_api
-      })
+      }),
+      //new BundleAnalyzerPlugin()
     ],
     devServer: {
       host: 'localhost',

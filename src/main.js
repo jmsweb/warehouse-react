@@ -5,11 +5,11 @@ import './App.scss';
 import App from './App';
 
 (ReactDOM.createRoot(
-    document.getElementById('app'))
+  document.getElementById('app'))
 ).render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </React.StrictMode>
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
 );
