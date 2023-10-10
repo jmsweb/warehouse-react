@@ -15,6 +15,7 @@ const SignIn = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const [validated, setValidated] = useState(false);
   const {user, setUser} = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -27,51 +28,59 @@ const SignIn = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    fetch(process.env.WAREHOUSE_API + '/api/v1/auth', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Authorization': 'Basic ' + btoa(username + ':' + password),
-        'Accept': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then(response => {
-      if (!response.hasOwnProperty('success') || !response.success || !response.hasOwnProperty('jwt')) {
-        throw new Error("failed api call");
-      }
-      console.log('redirect...');
-      console.log(response);
-      setUser({
-        jwt: response.jwt,
-        email: response.payload.email,
-        id: response.payload.id,
-        name: response.payload.name,
-        admin: response.payload.admin
-      });
-    })
-    .catch(() => setError(true) );
+    event.stopPropagation();
+
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      setValidated(true);
+      return;
+    }
+
+    async function postData() {
+      await fetch(process.env.WAREHOUSE_API + '/api/v1/auth', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Authorization': 'Basic ' + btoa(username + ':' + password),
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(response => {
+        if (!response.hasOwnProperty('success') || !response.success || !response.hasOwnProperty('jwt')) {
+          throw new Error("failed api call");
+        }
+        console.log('redirect...');
+        console.log(response);
+        setUser({
+          jwt: response.jwt,
+          email: response.payload.email,
+          id: response.payload.id,
+          name: response.payload.name,
+          admin: response.payload.admin
+        });
+      })
+      .catch(() => setError(true) );
+    }
+
+    postData();
   }
 
     return (
       <Container className='p-3' style={{ minHeight: '60vh'}}>
         {error && <Alert variant='danger' key={1}>Please submit correct credentials.</Alert>}
-        <Form onSubmit={onSubmit} className='d-flex flex-column w-50 mx-auto mt-4 mb-4' style={{minWidth: '21rem'}}>
+        <Form noValidate validated={validated} onSubmit={onSubmit} className='d-flex flex-column w-50 mx-auto mt-4 mb-4' style={{minWidth: '21rem'}}>
           <Form.Group controlId='form_un' className='mb-4'>
-            <Form.Control type='email'
-              placeholder='Email'
-              value={username}
-              onChange={(e) => setUsername(e.target.value) } />
+            <Form.Control required type='email' placeholder='Email' value={username} onChange={(e) => setUsername(e.target.value) } />
+            <Form.Control.Feedback type='invalid'>Email is a required field!</Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId='form_pw' className='mb-4'>
-            <Form.Control type='password'
-              placeholder='Password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value) } />
+            <Form.Control required type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value) } />
+            <Form.Control.Feedback type='invalid'>Password is a required field!</Form.Control.Feedback>
           </Form.Group>
           <div className='d-flex justify-content-center mx-3 mb-4'>
             <Form.Group controlId='form_rm' className='p-2'>
-              <Form.Check type='checkbox' label='Remember me' />
+              <Form.Check required={false} type='checkbox' label='Remember me' />
             </Form.Group>
             <Nav>
               <NavLink to={'/forgot-password'} className='p-2'>Forgot password?</NavLink>
