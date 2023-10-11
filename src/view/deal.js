@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const Deal = () => {
   return (
     <Container className='p-3 d-flex flex-column' style={{ minHeight: '60vh'}}>
-      <Row className='d-flex justify-content-between'>
+      <Row className='d-flex justify-content-center'>
         <Col sm className='my-2'>
           <div className='rounded border border-primary px-3 py-3'>
             <div>

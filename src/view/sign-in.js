@@ -67,7 +67,7 @@ const SignIn = () => {
     return (
       <Container className='p-3' style={{ minHeight: '60vh'}}>
         {error && <Alert variant='danger' key={1}>{error}</Alert>}
-        <Form noValidate validated={validated} onSubmit={onSubmit} className='d-flex flex-column w-50 mx-auto mt-4 mb-4' style={{minWidth: '21rem'}}>
+        <Form noValidate validated={validated} onSubmit={onSubmit} className='d-flex flex-column mx-auto mt-4 mb-4 w-100' style={{minWidth: '19rem', maxWidth: '30rem'}}>
           <Form.Group controlId='form_un' className='mb-4'>
             <Form.Control required type='email' placeholder='Email' value={username} onChange={(e) => setUsername(e.target.value) } />
             <Form.Control.Feedback type='invalid'>Email is a required field!</Form.Control.Feedback>
@@ -77,9 +77,6 @@ const SignIn = () => {
             <Form.Control.Feedback type='invalid'>Password is a required field!</Form.Control.Feedback>
           </Form.Group>
           <div className='d-flex justify-content-center mx-3 mb-4'>
-            <Form.Group controlId='form_rm' className='p-2'>
-              <Form.Check required={false} type='checkbox' label='Remember me' />
-            </Form.Group>
             <Nav>
               <NavLink to={'/forgot-password'} className='p-2'>Forgot password?</NavLink>
             </Nav>
