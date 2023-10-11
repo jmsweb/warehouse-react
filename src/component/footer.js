@@ -34,11 +34,6 @@ const Footer = () => {
       <Container>
         <Row>
           <Col>
-            <pre>{user && `${user.email} (${user.admin ? 'Admin' : 'Customer'})`}</pre>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
             <Navbar.Brand>
               <Nav>
                 <ListGroup horizontal={'lg'} className='mb-3'>
@@ -58,6 +53,11 @@ const Footer = () => {
               <NavLink href='#!' className='p-2'><Twitter className='fs-3' /></NavLink>
               <NavLink href='#!' className='p-2'><Instagram className='fs-3' /></NavLink>
             </Nav>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <pre>{user && `${user.email} (${user.admin ? 'Admin' : 'Customer'})`}</pre>
           </Col>
         </Row>
       </Container>

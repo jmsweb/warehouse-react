@@ -121,7 +121,7 @@ const AddCustomer = () => {
           </Form.Group>
         </Row>
         {
-          (!validatePassword(password1) || !validatePassword(password2) || password1 != password2) && 
+          (!validatePassword(password1) || !validatePassword(password2) || password1 != password2) && (password1.length > 0 || password2.length > 0) &&
           <Alert>
             <p>
               {/[A-Z]/.test(password1) ? <Complete style={{color: 'green'}} /> : <Missing style={{color: 'red'}} />} - Password must contain uppercase character.<br/>

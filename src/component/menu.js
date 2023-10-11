@@ -20,7 +20,7 @@ const Menu = () => {
     return (
       <>
         <NavDropdown.Divider />
-        <NavDropdown title='Admin' as={Nav}>
+        <NavDropdown align='end' title='Admin' as={Nav}>
           <NavDropdown.Item as={NavLink} to='/catalog/add'>Add Product</NavDropdown.Item>
           <NavDropdown.Item as={NavLink} to='/customer/add'>Add Customer</NavDropdown.Item>
         </NavDropdown>
@@ -38,7 +38,7 @@ const Menu = () => {
         <Nav>
           <Nav.Link as={NavLink} to='/deal' title='Deals'><Cash className='fs-3' /></Nav.Link>
           { user
-              ? <NavDropdown title={<Person className='fs-3'/>} as={Nav}>
+              ? <NavDropdown align='end' title={<Person className='fs-3'/>} as={Nav}>
                   <NavDropdown.Item as={NavLink} to='/contact-warehouse'>Profile</NavDropdown.Item>
                   <NavDropdown.Item as={NavLink} to='/account'>Account</NavDropdown.Item>
                   <NavDropdown.Item as={NavLink} to='/history'>History</NavDropdown.Item>

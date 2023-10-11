@@ -27,6 +27,7 @@ const SignIn = () => {
   }, [navigate, user]);
 
   const onSubmit = (event) => {
+    setError(null);
     event.preventDefault();
     event.stopPropagation();
 
@@ -48,7 +49,7 @@ const SignIn = () => {
       .then(response => response.json())
       .then(response => {
         if (!response.hasOwnProperty('success') || !response.success || !response.hasOwnProperty('jwt')) {
-          throw new Error("failed api call");
+          throw new Error("Please use correct credentials");
         }
         console.log('redirect...');
         setUser({
@@ -59,13 +60,13 @@ const SignIn = () => {
           admin: response.payload.admin
         });
       })
-      .catch(() => setError(true));
+      .catch((error) => setError("Server error: " + error.message + "."));
     })();
   }
 
     return (
       <Container className='p-3' style={{ minHeight: '60vh'}}>
-        {error && <Alert variant='danger' key={1}>Please submit correct credentials.</Alert>}
+        {error && <Alert variant='danger' key={1}>{error}</Alert>}
         <Form noValidate validated={validated} onSubmit={onSubmit} className='d-flex flex-column w-50 mx-auto mt-4 mb-4' style={{minWidth: '21rem'}}>
           <Form.Group controlId='form_un' className='mb-4'>
             <Form.Control required type='email' placeholder='Email' value={username} onChange={(e) => setUsername(e.target.value) } />

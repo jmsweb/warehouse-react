@@ -12,7 +12,8 @@ async function loadUser() {
     headers: {
       'Accept': 'application/json'
     }
-  }).then(response => response.json());
+  }).then(response => response.json())
+  .catch(error => console.log(error));
   if (!response || !response.success) {
     return null;
   }
