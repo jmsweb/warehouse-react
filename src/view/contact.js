@@ -13,7 +13,7 @@ const Contact = () => {
 
   return (
     <Container className='p-3' style={{ minHeight: '60vh'}}>
-      <h1 className='text-center py-4'>Contact Us</h1>
+      <h1 className='text-center py-4'>Send us a message!</h1>
       <Form onSubmit={onSubmit} className='d-flex flex-column w-50 mx-auto' style={{minWidth: '21rem'}}>
         <Form.Group controlId='form_email' className='mb-4'>
           <Form.Control type='email' placeholder='Email' />
