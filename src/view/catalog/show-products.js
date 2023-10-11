@@ -8,7 +8,7 @@ const ShowProducts = () => {
     console.log(par);
     return (
         <Container className='p-3 d-flex flex-column' style={{ minHeight: '60vh'}}>
-            hello {par}!
+            hello {par.category}!
         </Container>
     );
 }
