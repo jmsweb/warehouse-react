@@ -4,16 +4,18 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Missing from 'react-bootstrap-icons/dist/icons/x';
 import Complete from 'react-bootstrap-icons/dist/icons/check';
+import { useNavigate } from 'react-router-dom';
 
 const AddCustomer = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password1, setPassword1] = useState('');
-  const [password2, setPassword2] = useState('');
+  const [firstName, setFirstName] = useState('Tess');
+  const [lastName, setLastName] = useState('Tessler');
+  const [email, setEmail] = useState('test@attlocal.net');
+  const [password1, setPassword1] = useState('P0w3r$p3c');
+  const [password2, setPassword2] = useState('P0w3r$p3c');
   const [isAdmin, setIsAdmin] = useState(false);
   const [validated, setValidated] = useState(false);
   const [customer, setCustomer] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (customer) {
@@ -28,10 +30,10 @@ const AddCustomer = () => {
   }, [customer]);
 
   const onSubmit = (event) => {
+    setCustomer(null);
     event.preventDefault();
     event.stopPropagation();
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
+    if (event.currentTarget.checkValidity() === false) {
       setValidated(true);
       return;
     }
@@ -56,12 +58,14 @@ const AddCustomer = () => {
           isAdmin: isAdmin
         })
       })
-      .then(response => response.json())
       .then(response => {
-        setCustomer(response.customer);
+        if (response.status == 401) {
+          navigate('/sign-in');
+        }
+        return response.json();
       })
-      .catch((error) => console.log(error));
-
+      .then(response => setCustomer(response))
+      .catch(error => console.log(error));
     })();
   }
 
@@ -78,11 +82,7 @@ const AddCustomer = () => {
 
   return (
     <Container className='p-3 d-flex flex-column' style={{ minHeight: '60vh'}}>
-      {customer && 
-        <Alert>
-          <b>Added</b> {customer.email} - {customer.firstName} {customer.lastName} ({customer.isAdmin ? 'Admin': 'Customer'})
-        </Alert>
-      }
+      {customer && <Alert variant={customer.success == false ? 'danger' : 'success'}>{customer.message}</Alert>}
       <Form noValidate validated={validated} onSubmit={onSubmit} name='product'>
         <Row>
           <Form.Group as={Col} controlId='form_first_name' className='mb-4'>

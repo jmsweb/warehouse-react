@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Camera from 'react-bootstrap-icons/dist/icons/camera';
 import { Html5Qrcode, Html5QrcodeScanner } from 'html5-qrcode';
+import { useNavigate } from 'react-router-dom';
 
 const AddProduct = () => {
   const [camera, setCamera] = useState(false);
@@ -21,6 +22,7 @@ const AddProduct = () => {
   const [depth, setDepth] = useState('');
   const [qrCode, setQrCode] = useState(null);
   const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
 
   const onClick = () => {
     if (cameraId) {
@@ -61,8 +63,6 @@ const AddProduct = () => {
     }
 
     async function postData() {
-      console.log(event);
-      console.log(name);
       await fetch(process.env.WAREHOUSE_API + '/api/v1/product/add', {
           method: 'POST',
           credentials: 'include',
@@ -84,13 +84,13 @@ const AddProduct = () => {
             }
           })
       })
-      .then(response => response.json())
       .then(response => {
-          console.log(response);
+        if (response.status == 401) {
+          navigate('/sign-in');
+        }
+        return response.json();
       })
-      .catch((error) => {
-          console.log(error);
-      });
+      .catch(error => console.log(error));
     }
 
     postData();
