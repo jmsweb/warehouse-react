@@ -1,11 +1,11 @@
-import React, { lazy, Suspense, useEffect, useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { Navigate, Routes, Route } from 'react-router-dom';
 import UserContext from './context/user-context';
 import './App.scss';
-import AddCustomer from './view/customer/add-customer';
-import ProtectedRoute from './component/protected-route';
-import SignOut from './view/sign-out';
 
+const AddCustomer = lazy(() => import('./view/customer/add-customer'));
+const ProtectedRoute = lazy(() => import('./component/protected-route'));
+const SignOut = lazy(() => import('./view/sign-out'));
 const Home = lazy(() => import('./view/home'));
 const About = lazy(() => import('./view/about'));
 const Contact = lazy(() => import('./view/contact'));
@@ -21,39 +21,10 @@ const Footer = lazy(() => import('./component/footer'));
 const ShowProducts = lazy(() => import('./view/catalog/show-products'));
 const AddProduct = lazy(() => import('./view/catalog/add-product'));
 
-const App = () => {
-  const [user, setUser] = useState(null);
+const App = (props) => {
+  const [user, setUser] = useState(props.user);
   document.title = `Warehouse - React (${process.env.SITE_BUILD})`;
 
-  useEffect(() => {
-    (async () => {
-      console.log('verify called in app.js');
-      await fetch(process.env.WAREHOUSE_API + '/api/v1/auth/verify', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      .then(response => response.json())
-      .then(response => {
-        if (response.success) {
-          setUser({
-            email: response.payload.email,
-            id: response.payload.id,
-            name: response.payload.name,
-            admin: response.payload.admin
-          })
-        }
-      })
-      .catch((error) => console.log(error) )
-    })();
-
-  }, []);
-
-  // PROTECTED ROUTE USE AuthProvider
-  // https://blog.devgenius.io/how-to-add-authentication-to-a-react-app-26865ecaca4b
-  // https://medium.com/@dennisivy/creating-protected-routes-with-react-router-v6-2c4bbaf7bc1c
   return (
     <Suspense fallback={<h1>Hold on, it's loading...</h1>}>
       <UserContext.Provider value={{user, setUser}}>
@@ -82,7 +53,5 @@ const App = () => {
     </Suspense>
   );
 }
-
-
 
 export default App;

@@ -36,7 +36,7 @@ const SignIn = () => {
       return;
     }
 
-    async function postData() {
+    (async () => {
       await fetch(process.env.WAREHOUSE_API + '/api/v1/auth', {
         method: 'POST',
         credentials: 'include',
@@ -51,7 +51,6 @@ const SignIn = () => {
           throw new Error("failed api call");
         }
         console.log('redirect...');
-        console.log(response);
         setUser({
           jwt: response.jwt,
           email: response.payload.email,
@@ -60,10 +59,8 @@ const SignIn = () => {
           admin: response.payload.admin
         });
       })
-      .catch(() => setError(true) );
-    }
-
-    postData();
+      .catch(() => setError(true));
+    })();
   }
 
     return (

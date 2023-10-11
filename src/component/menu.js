@@ -13,6 +13,9 @@ import UserContext from '../context/user-context';
 const Menu = () => {
   const {user} = useContext(UserContext);
 
+  // PROTECTED ROUTE USE UserContext
+  // https://blog.devgenius.io/how-to-add-authentication-to-a-react-app-26865ecaca4b
+  // https://medium.com/@dennisivy/creating-protected-routes-with-react-router-v6-2c4bbaf7bc1c
   const AdminMenu = () => {
     return (
       <>
