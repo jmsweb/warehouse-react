@@ -15,8 +15,7 @@ const Footer = () => {
   const {user} = useContext(UserContext);
 
   const onClick = () => {
-    (async () => {
-      await fetch(process.env.WAREHOUSE_API + '/api/v1/auth/verify', {
+      fetch(process.env.WAREHOUSE_API + '/api/v1/auth/verify', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -25,8 +24,7 @@ const Footer = () => {
       })
       .then(response => response.json())
       .then(response => console.log(response))
-      .catch(error => console.log(error))
-    })();
+      .catch(error => console.log(error));
   }
 
   return (

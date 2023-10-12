@@ -1,7 +1,9 @@
 import React, { lazy, Suspense, useState } from 'react';
 import { Navigate, Routes, Route } from 'react-router-dom';
 import UserContext from './context/user-context';
+import checkCookie from './component/read-cookie-time';
 import './App.scss';
+import WarnCookieExpire from './component/warn-cookie-expire';
 
 const AddCustomer = lazy(() => import('./view/customer/add-customer'));
 const ProtectedRoute = lazy(() => import('./component/protected-route'));
@@ -23,11 +25,24 @@ const AddProduct = lazy(() => import('./view/catalog/add-product'));
 
 const App = (props) => {
   const [user, setUser] = useState(props.user);
+  const [warn, setWarn] = useState(false);
   document.title = `Warehouse - React (${process.env.SITE_BUILD})`;
+  console.log('app was called');
+
+  const cookieTime = checkCookie('warehouse-react-expiry');
+  const warnTime = 3;
+  if (cookieTime) {
+    const startWarnAt = (((cookieTime.minute - warnTime) * 60) + cookieTime.second) * 1000;
+    console.log(startWarnAt / 1000 + ' seconds left to warn.');
+    setTimeout(() => {
+      setWarn(true);
+    }, startWarnAt);
+  }
 
   return (
     <Suspense fallback={<h1>Hold on, it's loading...</h1>}>
       <UserContext.Provider value={{user, setUser}}>
+        {warn && <WarnCookieExpire show={true} cookieTime={cookieTime} onExtend={() => {console.log('continue clicked')}} /> }
         <Menu />
         <Routes>
           <Route index={true} element={<Home />}></Route>
