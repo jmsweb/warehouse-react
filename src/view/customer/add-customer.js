@@ -7,11 +7,11 @@ import Complete from 'react-bootstrap-icons/dist/icons/check';
 import { useNavigate } from 'react-router-dom';
 
 const AddCustomer = () => {
-  const [firstName, setFirstName] = useState('Tess');
-  const [lastName, setLastName] = useState('Tessler');
-  const [email, setEmail] = useState('test@attlocal.net');
-  const [password1, setPassword1] = useState('P0w3r$p3c');
-  const [password2, setPassword2] = useState('P0w3r$p3c');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password1, setPassword1] = useState('');
+  const [password2, setPassword2] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
   const [validated, setValidated] = useState(false);
   const [customer, setCustomer] = useState(null);
@@ -121,7 +121,7 @@ const AddCustomer = () => {
           </Form.Group>
         </Row>
         {
-          (!validatePassword(password1) || !validatePassword(password2) || password1 != password2) && 
+          (!validatePassword(password1) || !validatePassword(password2) || password1 != password2) && (password1.length > 0 || password2.length > 0) &&
           <Alert>
             <p>
               {/[A-Z]/.test(password1) ? <Complete style={{color: 'green'}} /> : <Missing style={{color: 'red'}} />} - Password must contain uppercase character.<br/>

@@ -37,7 +37,7 @@ const TermOfUse = () => {
       <p>Warehouse React may revise these Terms of Use for its Website at any time without prior notice. By using this Website, you are agreeing to be bound by the current version of these Terms and Conditions of Use.</p>
 
       <h2>8. Your Privacy</h2>
-      <p>Please read our <a href='/privacy-policy'>Privacy Policy</a>.</p>
+      <p>Please read our <NavLink to='/privacy-policy'>Privacy Policy</NavLink>.</p>
 
       <h2>9. Governing Law</h2>
       <p>Any claim related to Warehouse React's Website shall be governed by the laws of us without regards to its conflict of law provisions.</p>
