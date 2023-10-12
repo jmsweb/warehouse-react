@@ -5,7 +5,6 @@ const checkCookie = (name) => {
     second: 0
   };
 
-  console.log(document.cookie);
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
 
@@ -14,7 +13,7 @@ const checkCookie = (name) => {
     const remain = new Date(data) - Date.now();
     cookieTime.minute = parseInt((remain / 1000) / 60);
     cookieTime.second = parseInt((remain / 1000) % 60);
-    console.log(`M: ${cookieTime.minute} S: ${cookieTime.second}`);
+    // console.log(`M: ${cookieTime.minute} S: ${cookieTime.second}`);
     return cookieTime;
   }
 

@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Modal } from "react-bootstrap";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import UserContext from '../context/user-context';
-import { useNavigate } from 'react-router-dom';
 
 const WarnCookieExpire = (props) => {
   const [show, setShow] = useState(props.show);
   const {user, setUser} = useContext(UserContext);
   const [minute, setMinute] = useState(props.cookieTime.minute);
   const [second, setSecond] = useState(props.cookieTime.second);
-  const navigate = useNavigate();
   let interval = null;
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const WarnCookieExpire = (props) => {
         <h4>Current Session Expiring</h4>
         <p>The current session is about to expire in {minute}:{second < 10 ? ('0'+second) : second} from now.</p>
         <p>Click 'Continue' to extend the session by 10 more minutes, otherwise click 'Cancel' to allow session to expire.</p>
-        <p>Doing a web browser reload will show this dialog again but you must extend.</p>
+        <p>Doing a web browser reload will show this dialog again but you must extend the session to continue.</p>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={() => {
@@ -63,7 +62,8 @@ const WarnCookieExpire = (props) => {
                 admin: response.payload.admin
               });
             }
-            navigate(response.success ? window.location.pathname : '/');
+            // recycle the user through SPA
+            window.location = response.success ? window.location.pathname : '/';
           });
         }}>Continue</Button>
         <Button onClick={() => {

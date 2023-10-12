@@ -14,12 +14,15 @@ const Contact = lazy(() => import('./view/contact'));
 const Register = lazy(() => import('./view/register'));
 const TermOfUse = lazy(() => import('./view/term-of-use'));
 const PrivacyPolicy = lazy(() => import('./view/privacy-policy'));
+const Profile = lazy(() => import('./view/customer/profile'));
+const History = lazy(() => import('./view/customer/history'));
+const Account = lazy(() => import('./view/customer/account'));
 const SignIn = lazy(() => import('./view/sign-in'));
 const ForgotPassword = lazy(() => import('./view/forgot-password'));
 const CartReview = lazy(() => import('./view/cart-review'));
 const Deal = lazy(() => import('./view/deal'));
-const Menu = lazy(() => import('./component/menu'));
-const Footer = lazy(() => import('./component/footer'));
+const Menu = lazy(() => import('./template/menu'));
+const Footer = lazy(() => import('./template/footer'));
 const ShowProducts = lazy(() => import('./view/catalog/show-products'));
 const AddProduct = lazy(() => import('./view/catalog/add-product'));
 
@@ -30,19 +33,17 @@ const App = (props) => {
   console.log('app was called');
 
   const cookieTime = checkCookie('warehouse-react-expiry');
-  const warnTime = 3;
+  const warnTime = 9;
   if (cookieTime) {
     const startWarnAt = (((cookieTime.minute - warnTime) * 60) + cookieTime.second) * 1000;
     console.log(startWarnAt / 1000 + ' seconds left to warn.');
-    setTimeout(() => {
-      setWarn(true);
-    }, startWarnAt);
+    setTimeout(() => setWarn(true), startWarnAt);
   }
 
   return (
     <Suspense fallback={<h1>Hold on, it's loading...</h1>}>
       <UserContext.Provider value={{user, setUser}}>
-        {warn && <WarnCookieExpire show={true} cookieTime={cookieTime} onExtend={() => {console.log('continue clicked')}} /> }
+        {warn && <WarnCookieExpire show={true} cookieTime={cookieTime} /> }
         <Menu />
         <Routes>
           <Route index={true} element={<Home />}></Route>
@@ -51,6 +52,9 @@ const App = (props) => {
           <Route element={<ProtectedRoute />}>
             <Route path='/catalog/add' element={<AddProduct />} />
             <Route path='/customer/add' element={<AddCustomer />} />
+            <Route path='/customer/profile' element={<Profile />} />
+            <Route path='/customer/account' element={<Account />} />
+            <Route path='/customer/history' element={<History />} />
           </Route>
           <Route path='/catalog/:category' element={<ShowProducts />}></Route>
           <Route path='/contact-warehouse' element={<Contact />}></Route>

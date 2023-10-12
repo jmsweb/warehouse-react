@@ -39,9 +39,9 @@ const Menu = () => {
           <Nav.Link as={NavLink} to='/deal' title='Deals'><Cash className='fs-3' /></Nav.Link>
           { user
               ? <NavDropdown align='end' title={<Person className='fs-3'/>} as={Nav}>
-                  <NavDropdown.Item as={NavLink} to='/contact-warehouse'>Profile</NavDropdown.Item>
-                  <NavDropdown.Item as={NavLink} to='/account'>Account</NavDropdown.Item>
-                  <NavDropdown.Item as={NavLink} to='/history'>History</NavDropdown.Item>
+                  <NavDropdown.Item as={NavLink} to='/customer/profile'>Profile</NavDropdown.Item>
+                  <NavDropdown.Item as={NavLink} to='/customer/account'>Account</NavDropdown.Item>
+                  <NavDropdown.Item as={NavLink} to='/customer/history'>History</NavDropdown.Item>
                   {user.admin && <AdminMenu />}
                   <NavDropdown.Divider />
                   <NavDropdown.Item as={NavLink} to='/sign-out'>Sign Out</NavDropdown.Item>
