@@ -48,12 +48,11 @@ const SignIn = () => {
       })
       .then(response => response.json())
       .then(response => {
-        if (!response.hasOwnProperty('success') || !response.success || !response.hasOwnProperty('jwt')) {
+        if (!response.hasOwnProperty('success') || !response.success || !response.hasOwnProperty('payload')) {
           throw new Error("Please use correct credentials");
         }
         console.log('redirect...');
         setUser({
-          jwt: response.jwt,
           email: response.payload.email,
           id: response.payload.id,
           name: response.payload.name,

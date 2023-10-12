@@ -14,12 +14,12 @@ async function loadUser() {
     }
   }).then(response => response.json())
   .catch(error => console.log(error));
-  if (!response || !response.success) {
+
+  if (!response || !response.success || !response.payload) {
     return null;
   }
 
   return {
-    jwt: response.jwt,
     email: response.payload.email,
     id: response.payload.id,
     name: response.payload.name,

@@ -55,7 +55,6 @@ const WarnCookieExpire = (props) => {
             clearInterval(interval);
             if (response.success) {
               setUser({
-                jwt: response.jwt,
                 email: response.payload.email,
                 id: response.payload.id,
                 name: response.payload.name,
