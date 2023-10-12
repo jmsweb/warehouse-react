@@ -33,8 +33,8 @@ const App = (props) => {
   console.log('app was called');
 
   const cookieTime = checkCookie('warehouse-react-expiry');
-  const warnTime = 9;
   if (cookieTime) {
+    const warnTime = 1; // Choose a specific minute to trigger a dialog.
     const startWarnAt = (((cookieTime.minute - warnTime) * 60) + cookieTime.second) * 1000;
     console.log(startWarnAt / 1000 + ' seconds left to warn.');
     setTimeout(() => setWarn(true), startWarnAt);

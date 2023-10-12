@@ -38,7 +38,7 @@ const WarnCookieExpire = (props) => {
       <Modal.Body>
         <h4>Current Session Expiring</h4>
         <p>The current session is about to expire in {minute}:{second < 10 ? ('0'+second) : second} from now.</p>
-        <p>Click 'Continue' to extend the session by 10 more minutes, otherwise click 'Cancel' to allow session to expire.</p>
+        <p>Click 'Continue' to extend the session, otherwise click 'Cancel' to allow session to expire.</p>
         <p>Doing a web browser reload will show this dialog again but you must extend the session to continue.</p>
       </Modal.Body>
       <Modal.Footer>
